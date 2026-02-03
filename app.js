@@ -20,6 +20,8 @@ const listingsRouter= require("./routes/listing.js");
 const reviewsRouter=require("./routes/review.js");
 // require user.js
 const userRouter=require("./routes/user.js");
+//  require  bookings.js 
+const bookingRoutes = require("./routes/bookings");
 const session= require("express-session");
 //require connectMongo
 const MongoStore=require("connect-mongo");
@@ -42,7 +44,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(dbUrl);
+  await mongoose.connect( dbUrl);
 }
 
 app.set("view engine", "ejs");
@@ -54,7 +56,7 @@ app.use(express.static(path.join(__dirname,"/public")));
 
 // mongoStore is created here
 const store=MongoStore.create({
-  mongoUrl:dbUrl,   //sssoion information saved in MongoAtlas db
+  mongoUrl: dbUrl,   //sssoion information saved in MongoAtlas db
   
   crypto:{
     secret:process.env.SECRET,
@@ -98,9 +100,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-
-
-
 //middleware to flash message when newlisting is created
 app.use((req,res,next)=>{
   res.locals.success=req.flash("success");
@@ -111,21 +110,14 @@ app.use((req,res,next)=>{
   next();
 });
 
-// app.get("/demouser",async(req,res)=>{
-//   let fakeUser=new User({
-//     email:"student@gmail.com",
-//     username:"delta-student"
-//   });
-//   let registeredUser=await User.register(fakeUser,"helloworld");
-//   res.send(registeredUser);
-// });
 
 // for listing route
 app.use("/listings",listingsRouter);
 // for review routes
 app.use("/listings/:id/reviews",reviewsRouter)
-// FOR Uuser router
+// FOR user router
 app.use("/",userRouter);
+app.use("/bookings", bookingRoutes);
 
  app.all(/.*/, (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));
@@ -133,18 +125,10 @@ app.use("/",userRouter);
 
 
 
-
-// app.use((err, req, res, next) => {
-//   let { statusCode, message ="something went wrong"} = err;
-//   res.render("error.ejs").send(message);
-// });
-
-
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).render("error.ejs",{message});
 });
-
 
 
 

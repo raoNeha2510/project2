@@ -1,0 +1,27 @@
+<!-- views/bookings/my.ejs -->
+ <% layout("/layouts/boilerplate") %>
+<div class="container mt-5 mb-5">
+    <h2 class="title">My Bookings</h2>
+
+    <% bookings.forEach(b => { %>
+        <div class="booking-card">
+            <h4><%= b.listing.title %></h4>
+
+            <p class="date-text">
+                <strong>From:</strong> <%= b.checkIn.toDateString() %>  
+                <br>
+                <strong>To:</strong> <%= b.checkOut.toDateString() %>
+            </p>
+
+            <p class="price">Total Price: ₹ <%= b.totalPrice.toLocaleString("en-IN") %></p>
+
+            <span class="status-pill"><%= b.status %></span>
+
+            <div class="mt-3">
+                <a href="/listings/<%= b.listing._id %>" class="btn btn-outline-dark btn-sm">
+                    View Listing
+                </a>
+            </div>
+        </div>
+    <% }) %>
+</div>

@@ -21,6 +21,17 @@
     
       <p class="card-text"><%=listing.description %></p>
       <p class="card-text">&#8377; <%= listing.price.toLocaleString("en-IN")  %></p>
+      <!-- booking form -->
+       <form action="/bookings/<%= listing._id %>" method="POST">
+  <label>Check In:</label>
+  <input type="date" name="checkIn" required>
+  
+  <label>Check Out:</label>
+  <input type="date" name="checkOut" required>
+  
+  <button type="submit" class="btn btn-primary">Book Now</button>
+</form>
+
       <p class="card-text"><%=listing.location %><br></p>
       <p class="card-text"><%=listing.country %></p>
      </div>
@@ -69,7 +80,8 @@
              value="1"
              checked
              aria-label="No rating."
-              />
+             required />
+             
   <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
   <input type="radio" id="first-rate1" name="review[rating]" value="1" />
   <label for="first-rate1" title="Terrible">1 star</label>
@@ -82,6 +94,7 @@
   <input type="radio" id="first-rate5" name="review[rating]" value="5" />
   <label for="first-rate5" title="Amazing">5 stars</label>
 </fieldset>
+ <div class="invalid-feedback">Please give Ratings for Listing</div>
 </div>
 
     <!-- Comment -->
@@ -106,6 +119,7 @@
 <div class="row">
    <p><b>All Reviews</b></p>
   <% for (review of listing.reviews){ %>
+    
    <div class="card col-5 ms-3 mb-3" >
     <div class="card-body">
       <h5 class="card-title"> @<%= review.author.username %></h5>
@@ -121,7 +135,10 @@
       <button class="btn btn-sm btn-dark">Delete</button>
     </form>
        </div>
-    </div>
+
+       
+
+   
 <% } %>
 </div>
 <% } %>
