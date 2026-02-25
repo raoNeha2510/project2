@@ -43,9 +43,9 @@ router.post("/:listingId", isLoggedIn, async (req, res) => {
 router.get("/my", isLoggedIn, async (req, res) => {
   const bookings = await Booking.find({ user: req.user._id })
     .populate("listing");
-    const validBookings=bookings.filter(b=>b.listing !==null);
-
-  res.render("bookings/my", { bookings:validBookings });
+    const safeBookings = bookings.filter(b => b.listing);
+    
+  res.render("bookings/my", { bookings: safeBookings});
 });
 
 module.exports = router;

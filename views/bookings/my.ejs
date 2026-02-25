@@ -16,14 +16,14 @@
             <p class="price">Total Price: ₹ <%= b.totalPrice.toLocaleString("en-IN") %></p>
 
             <span class="status-pill"><%= b.status %></span>
-            <% if(b.listing)P{%>
+            <% if(b.listing){%>
             <div class="mt-3">
                 <a href="/listings/<%= b.listing._id %>" class="btn btn-outline-dark btn-sm">
                     View Listing
                 </a>
             </div>
             <%}%>
-            
+
         </div>
     <% }) %>
 </div>
