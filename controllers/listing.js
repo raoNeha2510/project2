@@ -102,17 +102,9 @@ module.exports.destroyListing=async(req,res)=>{
     res.redirect("/listings");
 };
 
-// controllers/listing.js
-// module.exports.index = async (req, res) => {
-//      const { category } = req.params;
-//   const listings = await Listing.find({category});
-//   res.render("listings/index", { listings,category });
-// };
 
-
-// --------------------
 // GET /listings
-// --------------------
+
 module.exports.index = async (req, res) => {
   const { q, category } = req.query;
 
@@ -135,9 +127,9 @@ module.exports.index = async (req, res) => {
   res.render("listings/index", { listings, q, category });
 };
 
-// --------------------
+
 // GET /listings/category/:category
-// --------------------
+
 module.exports.categoryListings = async (req, res) => {
   const { category } = req.params;
   const { q } = req.query;

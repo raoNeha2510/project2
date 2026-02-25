@@ -26,7 +26,7 @@ module.exports.saveRrdirectUrl=(req,res,next)=>{
 
 };
 
-// middleware for authorisation of for delete and edit routes it is not allowed form to edit
+// middleware for authorization  for delete and edit routes it is not allowed form to edit
 module.exports.isOwner=async(req,res,next)=>{
    let { id } = req.params;
     let listing=await Listing.findById(id);
@@ -45,7 +45,7 @@ module.exports.validateListing=(req,res,next)=>{
    let {error}=listingSchema.validate(req.body);
    
    if(error){
-    // to extract diffrent proprtis and detail of  eeach erroe
+    // to extract diffrent proprtis and detail of  each error
     let errmsg=error.details.map((el)=> el.message).join(",");
     throw new ExpressError(400,errmsg)
    }
@@ -55,7 +55,7 @@ module.exports.validateListing=(req,res,next)=>{
 
 };
 
-// validation of schema as midleware 
+// validation of schema as midlleware 
 module.exports. validateReview=(req,res,next)=>{
    let {error}= reviewSchema.validate(req.body);
    

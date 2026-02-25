@@ -1,3 +1,4 @@
+// model/listing.js
 const mongoose=require("mongoose");
 const review = require("./review");
 const Schema=mongoose.Schema;
