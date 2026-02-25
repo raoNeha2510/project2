@@ -3,6 +3,7 @@ const mongoose=require("mongoose");
 const review = require("./review");
 const Schema=mongoose.Schema;
 const Review=require("./review.js");
+const Booking = require("./booking");
 
 
     const listingSchema = new Schema({
@@ -65,7 +66,10 @@ const Review=require("./review.js");
 // and delete all corresponding reviews of that listing from the database
 listingSchema.post("findOneAndDelete",async(listing)=>{
   if(listing){
+     // delete related reviews
   await Review.deleteMany({_id: {$in: listing.reviews}});
+  // delete related bookings
+    await Booking.deleteMany({ listing: listing._id });
   }
 });
 
