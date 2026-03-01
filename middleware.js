@@ -8,8 +8,13 @@ const{listingSchema,reviewSchema}=require("./schema.js");
 module.exports.isLoggedIn=(req,res,next)=>{
   
   if(!req.isAuthenticated()){
-    req.session.redirectUrl=req.originalUrl;
-    req.flash("error","you must be logged in fisrt");
+   // If booking POST request, redirect back to listing page
+    if (req.method === "POST") {
+      req.session.redirectUrl = req.get("Referer");
+    } else {
+      req.session.redirectUrl = req.originalUrl;
+    }
+    req.flash("error","you must be logged in First");
     return res.redirect("/login");
     
   }
