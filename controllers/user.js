@@ -4,7 +4,7 @@
     res.render("users/signup.ejs");
 };
 
-module.exports.signup=async(req,res)=>{
+module.exports.signup=async(req,res,next)=>{
     try{
    let {username,email,password}=req.body ;
    const newUser=new User({email,username});
@@ -15,12 +15,12 @@ module.exports.signup=async(req,res)=>{
             return next(err);
         }
          req.flash("success","Welcome to wanderlust!");
-         res.redirect(req.sessoin.redirectUrl);
+         res.redirect(req.session.redirectUrl);
     });
    
     }catch(e){
         req.flash("error",e.message);
-        res.redirect("/listings");
+        res.redirect("/signup");
 
     }
 };
